@@ -1,6 +1,6 @@
 QT += core network
 
-TARGET = updater
+TARGET = softwareupdater
 TEMPLATE = lib
 
 DEFINES += UPDATER_LIBRARY
