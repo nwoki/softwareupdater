@@ -7,7 +7,7 @@
 #include <QtNetwork/QNetworkAccessManager>
 
 
-namespace Updater {
+namespace SoftwareUpdater {
 
 class UpdaterPrivate
 {
@@ -27,7 +27,7 @@ public:
     QVersionNumber currentVersion;
 };
 
-}   // Updater
+}   // SoftwareUpdater
 
 
 #endif  // UPDATER_P_H

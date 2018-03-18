@@ -7,7 +7,7 @@
 #include <QtCore/QVersionNumber>
 
 
-namespace Updater {
+namespace SoftwareUpdater {
 
 class UpdaterPrivate;
 

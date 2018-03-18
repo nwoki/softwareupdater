@@ -1,7 +1,7 @@
 #include "updater.h"
 #include "updater_p.h"
 
-namespace Updater {
+namespace SoftwareUpdater {
 
 Updater::Updater(const QString &updateServerUrl
                  , const QVersionNumber &currentVersion
