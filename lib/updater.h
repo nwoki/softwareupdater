@@ -6,6 +6,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QVersionNumber>
 
+#include <QtNetwork/QNetworkReply>
 
 namespace SoftwareUpdater {
 
@@ -55,6 +56,10 @@ protected:
     Updater(const QString &updateServerUrl
             , const QVersionNumber &currentVersion
             , QObject *parent = nullptr);
+
+private Q_SLOTS:
+    void onCheckUpdateReceived();
+    void onRequestError(QNetworkReply::NetworkError error);
 
 private:
     UpdaterPrivate * const d;

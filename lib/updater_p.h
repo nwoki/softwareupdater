@@ -14,7 +14,10 @@ class UpdaterPrivate
 public:
     UpdaterPrivate()
         : networkAccessManager(new QNetworkAccessManager)
-    {}
+    {
+        // default current version
+        currentVersion = QVersionNumber::fromString("0.0.0", nullptr);
+    }
 
     ~UpdaterPrivate()
     {
