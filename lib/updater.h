@@ -24,7 +24,7 @@ class UpdaterPrivate;
  *
  *  {
  *      "version": "x.x.x"
- *      "file": "setup.exe"
+ *      "file_path": "setup.exe"
  *  }
  *
  * version - the version of the available update
@@ -34,7 +34,16 @@ class UPDATERSHARED_EXPORT Updater : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY (DownloadState downloadState     READ downloadState      NOTIFY downloadStateChanged)
+
 public:
+    enum DownloadState {
+        IDLE,
+        DOWNLOADING,
+        COMPLETED,
+        ERROR
+    };
+
     virtual ~Updater();
 
     /**
@@ -43,7 +52,39 @@ public:
      */
     void checkUpdate();
 
+    /**
+     * @brief downloadedFilePath
+     *
+     * Path to the downloaded software file
+     */
+    QString downloadedFilePath() const;
+
+    /**
+     * @brief downloadstate
+     *
+     * returns the info on the current download state
+     */
+    DownloadState downloadState() const;
+
+    /**
+     * @brief downloadupdate
+     *
+     * Starts the download of the update file if available. If no download is available, and the function is call, an error will be sent via the
+     * appropriate signal. Call this after having received an "updateAvailable" signal and you want to download the new file
+     */
+    void downloadUpdate();
+
+    /**
+     * @brief updateReady
+     *
+     * this method is to be implemented by the developer in order to act upon the downloaded update file
+     */
+    virtual void updateReady() = 0;
+
 Q_SIGNALS:
+    void downloadStateChanged();
+
+    /** notifies the user that a newer version is available to download */
     void updateAvailable();
 
 protected:
@@ -62,6 +103,9 @@ private Q_SLOTS:
     void onRequestError(QNetworkReply::NetworkError error);
 
 private:
+    void setDownloadState(DownloadState state);
+
+    DownloadState m_downloadState;
     UpdaterPrivate * const d;
 };
 
