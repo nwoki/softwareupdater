@@ -127,6 +127,21 @@ void Updater::onCheckUpdateReceived()
     delete reply;
 }
 
+void Updater::onRequestError(QNetworkReply::NetworkError error)
+{
+    Q_UNUSED(error);
+
+    qDebug("[Updater::onRequestError]");
+    QNetworkReply *reply = qobject_cast<QNetworkReply*>(sender());
+
+    if (!reply) {
+        return;
+    }
+
+    qDebug() << reply->errorString();
+    delete reply;
+}
+
 void Updater::setDownloadState(SoftwareUpdater::Updater::DownloadState state)
 {
     m_downloadState = state;
