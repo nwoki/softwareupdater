@@ -1,6 +1,8 @@
 #ifndef UPDATER_P_H
 #define UPDATER_P_H
 
+#include "updater_global.h"
+
 #include <QtCore/QFile>
 #include <QtCore/QUrl>
 #include <QtCore/QVersionNumber>
@@ -10,7 +12,7 @@
 
 namespace SoftwareUpdater {
 
-class UpdaterPrivate
+class UPDATERSHARED_EXPORT UpdaterPrivate
 {
 public:
     struct UpdateFileData {
