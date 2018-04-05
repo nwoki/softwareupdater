@@ -37,6 +37,12 @@ class UPDATERSHARED_EXPORT Updater : public QObject
     Q_PROPERTY (DownloadState downloadState     READ downloadState      NOTIFY downloadStateChanged)
 
 public:
+    struct UpdateFileData {
+        QVersionNumber version = QVersionNumber::fromString("0.0.0");
+        QString downloadDir;
+        QString downloadFile;
+    };
+
     enum DownloadState {
         IDLE,
         DOWNLOADING,
@@ -82,7 +88,7 @@ public:
     virtual void updateReady() = 0;
 
 Q_SIGNALS:
-    void downloadStateChanged();
+    void downloadStateChanged(DownloadState state);
 
     /** notifies the user that a newer version is available to download */
     void updateAvailable();
@@ -105,7 +111,6 @@ private Q_SLOTS:
 private:
     void setDownloadState(DownloadState state);
 
-    DownloadState m_downloadState;
     UpdaterPrivate * const d;
 };
 

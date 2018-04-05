@@ -14,7 +14,6 @@ Updater::Updater(const QString &updateServerUrl
                  , const QVersionNumber &currentVersion
                  , QObject *parent)
     : QObject(parent)
-    , m_downloadState(IDLE)
     , d(new UpdaterPrivate)
 {
     // check for valid url
@@ -50,9 +49,9 @@ QString Updater::downloadedFilePath() const
     return d->downloadedFile->fileName();
 }
 
-SoftwareUpdater::Updater::DownloadState Updater::downloadState() const
+Updater::DownloadState Updater::downloadState() const
 {
-    return m_downloadState;
+    return d->downloadState;
 }
 
 void Updater::downloadUpdate()
@@ -144,8 +143,10 @@ void Updater::onRequestError(QNetworkReply::NetworkError error)
 
 void Updater::setDownloadState(SoftwareUpdater::Updater::DownloadState state)
 {
-    m_downloadState = state;
-    Q_EMIT downloadStateChanged();
+    if (d->downloadState != state) {
+        d->downloadState = state;
+        Q_EMIT downloadStateChanged(d->downloadState);
+    }
 }
 
 

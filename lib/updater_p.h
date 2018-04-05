@@ -1,11 +1,11 @@
 #ifndef UPDATER_P_H
 #define UPDATER_P_H
 
+#include "updater.h"
 #include "updater_global.h"
 
 #include <QtCore/QFile>
 #include <QtCore/QUrl>
-#include <QtCore/QVersionNumber>
 
 #include <QtNetwork/QNetworkAccessManager>
 
@@ -14,17 +14,12 @@ namespace SoftwareUpdater {
 
 class UPDATERSHARED_EXPORT UpdaterPrivate
 {
+
 public:
-    struct UpdateFileData {
-        QVersionNumber version = QVersionNumber::fromString("0.0.0");
-        QString downloadDir;
-        QString downloadFile;
-    };
-
-
     UpdaterPrivate()
         : networkAccessManager(new QNetworkAccessManager)
         , downloadedFile(new QFile)
+        , downloadState(Updater::IDLE)
     {
         // default current version
         currentVersion = QVersionNumber::fromString("0.0.0", nullptr);
@@ -46,10 +41,12 @@ public:
     QUrl updateServerUrl;
     QVersionNumber currentVersion;
 
-    UpdateFileData updateFileData;
+    Updater::UpdateFileData updateFileData;
 
     /** the QFile that we'll use for downloading the software updates */
     QFile *downloadedFile;
+
+    Updater::DownloadState downloadState;
 };
 
 }   // SoftwareUpdater
