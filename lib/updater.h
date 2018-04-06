@@ -53,12 +53,6 @@ public:
     virtual ~Updater();
 
     /**
-     * @brief checkUpdate
-     * checks if an update is available. If so, the "updateAvaialbe" signal will be emitted
-     */
-    void checkUpdate();
-
-    /**
      * @brief downloadedFilePath
      *
      * Path to the downloaded software file
@@ -80,18 +74,19 @@ public:
      */
     void downloadUpdate();
 
+
+public Q_SLOTS:
     /**
-     * @brief updateReady
-     *
-     * this method is to be implemented by the developer in order to act upon the downloaded update file
+     * @brief checkUpdate
+     * checks if an update is available. If so, the "updateAvaialbe" signal will be emitted
      */
-    virtual void updateReady() = 0;
+    void checkUpdate();
 
 Q_SIGNALS:
     void downloadStateChanged(DownloadState state);
 
     /** notifies the user that a newer version is available to download */
-    void updateAvailable();
+    void updateAvailable(const QString &versionString);
 
 protected:
     /**
@@ -103,6 +98,13 @@ protected:
     Updater(const QString &updateServerUrl
             , const QVersionNumber &currentVersion
             , QObject *parent = nullptr);
+
+    /**
+     * @brief updateReady
+     *
+     * this method is to be implemented by the developer in order to act upon the downloaded update file
+     */
+    virtual void updateReady() = 0;
 
 private Q_SLOTS:
     void onCheckUpdateReceived();

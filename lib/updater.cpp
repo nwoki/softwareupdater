@@ -37,7 +37,8 @@ void Updater::checkUpdate()
     // keep the network request seperate in case we need to setup some configuration options later
     // on in the evolution of the lib
 
-    QNetworkRequest updateReq(d->updateServerUrl);
+    // The update file with the info we need is always called "updates" (see README.md)
+    QNetworkRequest updateReq(QUrl(d->updateServerUrl.toString() + "updates"));
     QNetworkReply *updateReqReply = d->networkAccessManager->get(updateReq);
 
     connect(updateReqReply, &QNetworkReply::finished, this, &Updater::onCheckUpdateReceived);
@@ -120,7 +121,7 @@ void Updater::onCheckUpdateReceived()
         d->updateFileData.downloadDir = jsonMap["dir"].toString();
         d->updateFileData.downloadFile = jsonMap["file"].toString();
 
-        Q_EMIT updateAvailable();
+        Q_EMIT updateAvailable(jsonMap["version"].toString());
     }
 
     delete reply;
