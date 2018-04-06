@@ -81,6 +81,7 @@ void Updater::downloadUpdate()
         d->downloadedFile->write(reply->readAll());
     });
 
+    connect(reply, &QNetworkReply::downloadProgress, this, &Updater::downloadProgressUpdate);
     connect(reply, SIGNAL(error(QNetworkReply::NetworkError)), this, SLOT(onRequestError(QNetworkReply::NetworkError)));
 
     connect(reply, &QNetworkReply::finished, [this, reply] () {

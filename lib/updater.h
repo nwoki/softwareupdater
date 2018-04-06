@@ -83,6 +83,21 @@ public Q_SLOTS:
     void checkUpdate();
 
 Q_SIGNALS:
+    /**
+     * @brief downloadProgressUpdate
+     * @param downloaded bytes downloaded
+     * @param totalToDownload total bytes to download
+     *
+     * notifies the download progress
+     */
+    void downloadProgressUpdate(quint64 downloaded, quint64 totalToDownload);
+
+    /**
+     * @brief downloadStateChanged
+     * @param state the state of the current download
+     *
+     * notifies the state of the downloads
+     */
     void downloadStateChanged(DownloadState state);
 
     /** notifies the user that a newer version is available to download */
