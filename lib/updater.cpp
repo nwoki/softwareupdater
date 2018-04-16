@@ -116,13 +116,14 @@ void Updater::onCheckUpdateReceived()
         return;
     }
 
-    if (QVersionNumber::compare(QVersionNumber::fromString(jsonMap["version"].toString()), d->currentVersion) > 0) {
+    QVersionNumber newVersion = QVersionNumber::fromString(jsonMap["version"].toString());
+    if (QVersionNumber::compare(newVersion, d->currentVersion) > 0) {
         // store the update info for when we'll want to download the file
-        d->updateFileData.version = QVersionNumber::fromString(jsonMap["version"].toString());
+        d->updateFileData.version = newVersion;
         d->updateFileData.downloadDir = jsonMap["dir"].toString();
         d->updateFileData.downloadFile = jsonMap["file"].toString();
 
-        Q_EMIT updateAvailable(jsonMap["version"].toString());
+        Q_EMIT updateAvailable(d->updateFileData.version);
     }
 
     delete reply;

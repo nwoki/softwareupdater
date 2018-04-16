@@ -101,7 +101,7 @@ Q_SIGNALS:
     void downloadStateChanged(DownloadState state);
 
     /** notifies the user that a newer version is available to download */
-    void updateAvailable(const QString &versionString);
+    void updateAvailable(const QVersionNumber &version);
 
 protected:
     /**
